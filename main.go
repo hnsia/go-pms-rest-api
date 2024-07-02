@@ -8,10 +8,10 @@ import (
 
 func main() {
 	cfg := mysql.Config{
-		User:                 "root",
-		Passwd:               "",
-		Addr:                 "",
-		DBName:               "go-pms",
+		User:                 Envs.DBUser,
+		Passwd:               Envs.DBPassword,
+		Addr:                 Envs.DBAddress,
+		DBName:               Envs.DBName,
 		Net:                  "tcp",
 		AllowNativePasswords: true,
 		ParseTime:            true,
