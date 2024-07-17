@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/golang-jwt/jwt"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func WithJWTAuth(handlerFunc http.HandlerFunc, store Store) http.HandlerFunc {
@@ -74,4 +75,13 @@ func validateJWT(t string) (*jwt.Token, error) {
 
 		return []byte(secret), nil
 	})
+}
+
+func HashPassword(pw string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(pw), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+
+	return string(hash), nil
 }
