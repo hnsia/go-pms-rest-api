@@ -88,3 +88,18 @@ func validateUserPayload(user *User) error {
 
 	return nil
 }
+
+func createAndSetAuthCookie(id int64, w http.ResponseWriter) (string, error) {
+	secret := []byte(Envs.JWTSecret)
+	token, err := CreateJWT(secret, id)
+	if err != nil {
+		return "", err
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:  "Authorization",
+		Value: token,
+	})
+
+	return token, nil
+}
